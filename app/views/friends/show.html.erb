@@ -1,3 +1,7 @@
+<% if current_user.remote_clinic_lawyer? %>
+  <%= render 'remote_clinic_lawyer_show.html.erb' %>
+<% else %>
+
 <h1><%=  @friend.name %></h1>
 
 <div class= 'row'>

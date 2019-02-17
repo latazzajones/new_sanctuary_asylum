@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   get 'pledge', to: 'home#pledge'
 
-  resources :friends, only: [:index]
+  resources :friends, only: [:index, :show]
 
   resources :communities, param: :slug, only: [] do
     devise_for :users, only: [:invitations], controllers: { invitations: "invitations" }
@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     get 'dashboard', to: 'dashboard#index'
 
     resources :users, only: [:edit, :update]
-    resources :friends, only: [:show, :update] do
+    resources :friends, only: [:update] do
       resources :drafts do
         member do
           get :submit_for_review
@@ -96,7 +96,7 @@ Rails.application.routes.draw do
   end
 
   namespace :remote_clinic do
-    resources :friends, only: [:show] do
+    resources :friends, only: [] do
       resources :releases, only: [:new, :create, :destroy]
     end
   end

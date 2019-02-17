@@ -11,7 +11,7 @@ class RemoteClinic::ReleasesController < ApplicationController
     @release = friend.releases.build(release_params)
     if @release.save
       flash[:success] = 'Release saved'
-      redirect_to remote_clinic_friend_path(friend)
+      redirect_to friend_path(friend)
     else
       flash.now[:error] = 'Release not saved'
       render :new
@@ -21,7 +21,7 @@ class RemoteClinic::ReleasesController < ApplicationController
   def destroy
     release.destroy
     flash[:success] = 'Release deleted'
-    redirect_to remote_clinic_friends_path
+    redirect_to friends_path
   end
 
   private

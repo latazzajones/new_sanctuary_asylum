@@ -17,7 +17,7 @@ RSpec.describe 'Give volunteers access to friends', type: :feature, js: true do
       end
       logout(:user)
       login_as(volunteer)
-      visit community_friend_path(community, friend)
+      visit friend_path(community, friend)
 
       expect(page).to have_content 'Basic'
       expect(page).to have_content 'Documents'

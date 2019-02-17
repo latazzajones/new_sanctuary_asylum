@@ -87,7 +87,7 @@ class DraftsController < ApplicationController
     if current_user.regional_admin?
       redirect_to regional_admin_region_friend_path(friend.region, friend)
     else
-      redirect_to remote_clinic_friend_path(friend)
+      redirect_to friend_path(friend)
     end
   end
 
@@ -101,7 +101,7 @@ class DraftsController < ApplicationController
     if current_user.admin?
       redirect_to edit_community_admin_friend_path(current_community.slug, friend, tab: '#documents')
     else
-      redirect_to community_friend_path(current_community.slug, friend, tab: '#documents')
+      redirect_to friend_path(current_community.slug, friend, tab: '#documents')
     end
   end
 

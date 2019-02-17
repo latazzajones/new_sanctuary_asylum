@@ -4,7 +4,7 @@ class ReviewMailer < ApplicationMailer
   def review_needed_email(draft)
     @draft = draft
     emails = draft.friend.remote_clinic_lawyers.map(&:email)
-    @link_url = remote_clinic_friend_url(draft.friend)
+    @link_url = friend_url(draft.friend)
     mail(to: emails, subject: 'Review needed')
   end
 

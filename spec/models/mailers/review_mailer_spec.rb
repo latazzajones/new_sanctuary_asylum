@@ -34,8 +34,8 @@ RSpec.describe ReviewMailer, type: :mailer do
     end
 
     it 'renders the body' do
-      expect(mail.html_part.body.raw_source).to include "#{draft.friend.first_name}'s #{draft.application.category} application draft has been submitted for review: <a href=\"#{remote_clinic_friend_url(draft.friend)}\">#{remote_clinic_friend_url(draft.friend)}</a>"
-      expect(mail.text_part.body.raw_source).to include "#{draft.friend.first_name}'s #{draft.application.category} application draft has been submitted for review: #{remote_clinic_friend_url(draft.friend)}"
+      expect(mail.html_part.body.raw_source).to include "#{draft.friend.first_name}'s #{draft.application.category} application draft has been submitted for review: <a href=\"#{friend_url(draft.friend)}\">#{friend_url(draft.friend)}</a>"
+      expect(mail.text_part.body.raw_source).to include "#{draft.friend.first_name}'s #{draft.application.category} application draft has been submitted for review: #{friend_url(draft.friend)}"
     end
   end
 

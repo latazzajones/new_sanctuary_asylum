@@ -73,7 +73,7 @@ class ReviewsController < ApplicationController
     if current_user.regional_admin?
       redirect_to regional_admin_region_friend_path(friend.region, friend)
     elsif current_user.remote_clinic_lawyer?
-      redirect_to remote_clinic_friend_path(friend)
+      redirect_to friend_path(friend)
     else
       redirect_to edit_community_admin_friend_path(current_community.slug, friend, tab: '#documents')
     end

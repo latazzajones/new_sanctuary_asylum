@@ -25,7 +25,7 @@ class ReleasesController < ApplicationController
     if current_user.admin?
       redirect_to community_friend_drafts_path(current_community.slug, friend, tab: '#documents')
     else
-      redirect_to community_friend_path(current_community.slug, friend, tab: '#documents')
+      redirect_to friend_path(current_community.slug, friend, tab: '#documents')
     end
   end
 

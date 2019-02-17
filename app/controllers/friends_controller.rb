@@ -1,7 +1,8 @@
 class FriendsController < ApplicationController
   before_action :authenticate_user!
+  # TODO ⬇️ this should be moved into the policy
   before_action :require_access_to_community
-  before_action :require_access_to_friend, only: %i[update show]
+
   after_action :verify_authorized, only: [:index]
   after_action :verify_policy_scoped, only: [:index]
 
@@ -11,11 +12,23 @@ class FriendsController < ApplicationController
   end
 
   def show
-    friend
-    @current_tab = current_tab
+    if current_user.remote_clinic_lawyer? 
+      return not_found unless current_user.existing_remote_relationship?(params[:id])
+      if !release && !friend.region.border?
+        redirect_to new_remote_clinic_friend_release_path(friend)
+      else
+        render
+      end
+    else
+      not_found unless UserFriendAssociation.where(friend_id: params[:id], user_id: current_user.id).present?
+      friend                      
+      @current_tab = current_tab  
+    end
   end
 
   def update
+    not_found unless UserFriendAssociation.where(friend_id: params[:id], user_id: current_user.id).present?
+
     friend.update(friend_params)
     respond_to do |format|
       format.js { render file: 'friends/access', locals: { friend: friend } }
@@ -23,10 +36,6 @@ class FriendsController < ApplicationController
   end
 
   private
-
-  def require_access_to_friend
-    not_found unless UserFriendAssociation.where(friend_id: params[:id], user_id: current_user.id).present?
-  end
 
   def friend
     @friend ||= current_user.friends.find(params[:id])
@@ -44,5 +53,9 @@ class FriendsController < ApplicationController
     else
       '#basic'
     end
+  end
+
+  def release 
+    @release ||= current_user.releases.find_by(friend: friend)
   end
 end
